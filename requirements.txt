@@ -1,4 +1,4 @@
-torch==1.11.0
+torch==1.13.1
 hydra-core==1.2.1
 hydra_colorlog
 numpy
