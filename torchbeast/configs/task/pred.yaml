@@ -1,0 +1,5 @@
+# @package _global_
+
+no_train_actor: true 
+pred_model: true
+actor_load_dir: "${actor_load_dirs[${dict_key}]}"

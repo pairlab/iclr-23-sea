@@ -1,0 +1,5 @@
+# @package _global_
+
+discounting: 0.99
+epsilon: 0.01
+learning_rate: 0.0006

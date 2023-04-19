@@ -1,0 +1,13 @@
+# @package _global_
+
+do_clustering: true
+no_train_actor: true
+no_train_pred: true
+
+num_actors: 64
+clustering_maxlen: 1e4
+
+pred_model: true
+
+actor_load_dir: "${actor_load_dirs[${dict_key}]}"
+pred_model_load_dir: "${pred_model_load_dirs[${dict_key}]}"

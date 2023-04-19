@@ -1,0 +1,10 @@
+# @package _global_
+
+num_objectives: "${num_objectives_dict[${dict_key}]}"
+cluster_load_dir: "${cluster_load_dirs[${dict_key}]}"
+cluster_pred_model_load_dir: "${cluster_pred_model_load_dirs[${dict_key}]}"
+cluster_threshold: "${cluster_thresholds[${dict_key}]}"
+causal_graph_load_path: "${causal_graph_load_paths[${dict_key}]}"
+normalize_reward: false
+objective_as_input: true
+multi_objective: true

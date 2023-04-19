@@ -1,0 +1,4 @@
+# @package _global_
+
+discounting: 0.99
+epsilon: 0.01

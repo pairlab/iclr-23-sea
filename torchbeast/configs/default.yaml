@@ -1,0 +1,163 @@
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+defaults:
+- _self_
+- env_config: crafter
+- task: run
+- override hydra/job_logging: colorlog
+- override hydra/hydra_logging: colorlog
+# - hydra/launcher: submitit_slurm
+
+# # To Be Used With hydra submitit_slurm if you have SLURM cluster
+# # pip install hydra-core hydra_colorlog
+# # can set these on the commandline too, e.g. `hydra.launcher.partition=dev`
+# hydra:
+#   launcher:
+#     timeout_min: 4300
+#     cpus_per_task: 20  
+#     gpus_per_node: 2
+#     tasks_per_node: 1
+#     mem_gb: 20
+#     nodes: 1
+#     partition: dev
+#     comment: null  
+#     max_num_timeout: 5  # will requeue on timeout or preemption
+
+
+name: null  # can use this to have multiple runs with same params, eg name=1,2,3,4,5
+data_root: null
+
+## WANDB settings
+wandb: false                # Enable wandb logging.
+project: test               # The wandb project name.
+entity: test                # The wandb user to log to.
+group: test                 # The wandb group for the run.
+wandb_name: null
+
+# POLYBEAST ENV settings
+seed: 0
+write_profiler_trace: false  # Collect and write a profiler trace for chrome://tracing/.
+
+# RUN settings.
+mode: train                  # Training or test mode.
+env: crafter                 # Name of Gym environment to create.
+
+# TRAINING settings.
+num_actors: 256              # Number of actors.
+total_steps: 1e9             # Total environment steps to train for. Will be cast to int.
+total_episodes: null
+batch_size: 32               # Learner batch size.
+unroll_length: 80            # The unroll length (time dimension).
+num_learner_threads: 1       # Number learner threads.
+max_learner_queue_size: null
+num_inference_threads: 1     # Number inference threads.
+disable_cuda: false          # Disable CUDA.
+learner_device: cuda:0       # Set learner device.
+actor_device: cuda:0         # Set actor device.
+
+# OPTIMIZER settings. (RMS Prop)
+learning_rate: 0.0002        # Learning rate.
+grad_norm_clipping: 40       # Global gradient norm clip.
+alpha: 0.99                  # RMSProp smoothing constant.
+momentum: 0                  # RMSProp momentum.
+epsilon: 0.000001            # RMSProp epsilon.
+
+# LOSS settings.
+entropy_cost: 0.001          # Entropy cost/multiplier.
+baseline_cost: 0.5           # Baseline cost/multiplier.
+discounting: 0.999           # Discounting factor.
+normalize_reward: true       # Normalizes reward by dividing by running stdev from mean.
+clip_reward: false           # Clip reward to [-1, 1]
+
+# MODEL settings.
+model: baseline              # Name of model to build (see models/__init__.py).
+use_lstm: true               # Use LSTM in agent model.
+hidden_dim: 256              # Size of hidden representations.
+embedding_dim: 64            # Size of glyph embeddings.
+
+# RND settings
+use_rnd: false
+rnd_output_dim: 128
+
+# LOAD settings.    
+load_dir: null               # Path to load a model from
+actor_load_dir: null         # Path to load an actor model from
+pred_model_load_dir: null    # Path to load a prediction model from
+
+savedir: null
+
+# PRED MODEL settings
+pred_model: false
+no_train_actor: false
+no_train_pred: false
+no_reward_pred: false
+no_contrast_loss: false
+contrast_step_limit: null
+key_frames_maxlen: 256
+pred_no_next_frame: false
+predict_items:
+  reward: [1]
+
+# CLUSTERING settings
+do_clustering: false
+clustering_maxlen: null
+
+# MULTI-OBJECTIVE settings
+multi_objective: false
+include_new_tasks: false
+num_objectives: 1
+cluster_load_dir: null
+cluster_pred_model_load_dir: null
+cluster_threshold: null
+done_at_reward: false
+causal_graph_load_path: null
+graph_no_jumping: false
+objective_as_input: false
+objective_selection_algo: null
+mo_expl_coef: 0.1
+
+# CRAFTER settings
+use_crafter_monitor: false
+crafter_original: false
+crafter_limited: false
+
+# MINIGRID settings
+distractions_hard: false
+distractions_easy: false
+
+dict_key: demo
+
+actor_load_dirs:
+  demo: "${data_root}/xxx/checkpoint.tar"
+
+pred_model_load_dirs:
+  demo: "${data_root}/xxx/checkpoint.tar"
+
+mo_actor_load_dirs:
+  demo: "${data_root}/xxx/checkpoint.tar"
+
+num_objectives_dict:
+  demo: 17
+
+cluster_load_dirs:
+  demo: "${data_root}/xxx/cluster.data"
+
+cluster_pred_model_load_dirs:
+  demo: "${data_root}/xxx"
+
+cluster_thresholds:
+  demo: 1.0
+
+causal_graph_load_paths:
+  demo: "${data_root}/xxx/graph.data"

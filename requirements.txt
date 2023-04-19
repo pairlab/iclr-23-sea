@@ -1,0 +1,11 @@
+torch==1.11.0
+hydra-core==1.2.1
+hydra_colorlog
+numpy
+wandb
+joblib
+gym==0.21.0
+importlib-metadata==4.13.0
+ruamel.yaml
+opensimplex==0.3
+scikit-learn
